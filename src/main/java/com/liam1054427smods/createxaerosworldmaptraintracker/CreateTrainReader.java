@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.simibubi.create.Create;
+import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Train;
 
 import net.minecraft.world.phys.Vec3;
@@ -14,13 +15,13 @@ final class CreateTrainReader {
     private CreateTrainReader() {
     }
 
-    static Map<UUID, TrainMarker> snapshot() {
+    static Map<UUID, TrainMarker> snapshot(GlobalRailwayManager railwayManager) {
         if (!ModList.get().isLoaded(CreateXaerosWorldMapTrainTracker.CREATE_MODID)) {
             return Map.of();
         }
 
         Map<UUID, TrainMarker> markers = new HashMap<>();
-        for (Train train : Create.RAILWAYS.trains.values()) {
+        for (Train train : railwayManager.trains.values()) {
             if (train.invalid || train.graph == null || train.carriages.isEmpty()) {
                 continue;
             }

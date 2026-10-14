@@ -1,3 +1,4 @@
 {
-  "gui.createxaerosworldmaptraintracker.train_count": "Create trains: %s"
+  "gui.createxaerosworldmaptraintracker.train_count": "Create trains: %s",
+  "config.createxaerosworldmaptraintracker.tracking_side": "Train tracking side"
 }

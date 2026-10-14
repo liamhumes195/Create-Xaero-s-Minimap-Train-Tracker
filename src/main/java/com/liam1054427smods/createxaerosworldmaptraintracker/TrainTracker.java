@@ -50,7 +50,20 @@ public final class TrainTracker {
     }
 
     private static void updateAndBroadcast() {
-        Map<UUID, TrainMarker> current = CreateTrainReader.snapshot();
+        if (!TrackerSideConfig.TRACKING_SIDE.get().tracksServer()) {
+            if (!LAST_SENT.isEmpty()) {
+                PacketDistributor.sendToAllPlayers(new TrainUpdatePayload(
+                        List.of(),
+                        List.copyOf(LAST_SENT.keySet())
+                ));
+                LAST_SENT.clear();
+            }
+            return;
+        }
+
+        Map<UUID, TrainMarker> current = CreateTrainReader.snapshot(
+                com.simibubi.create.Create.RAILWAYS
+        );
         List<TrainMarker> upserts = new ArrayList<>();
         List<UUID> removals = new ArrayList<>();
 
